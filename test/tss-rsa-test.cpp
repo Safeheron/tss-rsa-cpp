@@ -58,6 +58,43 @@ TEST(TSS_RSA, PSS) {
     EXPECT_TRUE(pub.VerifySignature(doc_pss, sig));
 }
 
+TEST(TSS_RSA_4096, PSS) {
+    std::string doc = "hello world";
+
+    // Key Generation
+    int key_bits_length = 4096;
+    int k = 2;
+    int l = 3;
+
+    RSAKeyMeta key_meta;
+    RSAPublicKey pub;
+    std::vector<RSAPrivateKeyShare> priv_arr;
+    std::vector<RSASigShare> sig_arr;
+    BN sig;
+    safeheron::tss_rsa::GenerateKey(key_bits_length, l, k, priv_arr, pub, key_meta);
+    std::cout << "pub.n: " << pub.n().Inspect() << std::endl;
+    std::cout << "pub.e: " << pub.e().Inspect() << std::endl;
+
+    // Prepare EMSA_PSS
+    std::string doc_pss = safeheron::tss_rsa::EncodeEMSA_PSS(doc, key_bits_length,
+                                                             safeheron::tss_rsa::SaltLength::AutoLength);
+    std::cout << "doc_pss: " << safeheron::encode::hex::EncodeToHex(doc_pss) << std::endl;
+
+    // Sign
+    for(int i = 0; i < l; i++) {
+        sig_arr.emplace_back(priv_arr[i].Sign(doc_pss, key_meta, pub));
+    }
+
+    // Combine
+    safeheron::tss_rsa::CombineSignatures(doc_pss, sig_arr, pub, key_meta, sig);
+
+    // Verify EMSA_PSS
+    EXPECT_TRUE(safeheron::tss_rsa::VerifyEMSA_PSS(doc, key_bits_length, safeheron::tss_rsa::SaltLength::AutoLength, doc_pss));
+    std::cout << "signature: " << sig.Inspect() <<std::endl;
+    // Verify Signature
+    EXPECT_TRUE(pub.VerifySignature(doc_pss, sig));
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     int ret = RUN_ALL_TESTS();

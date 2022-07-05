@@ -38,8 +38,8 @@ RSAPublicKey::RSAPublicKey(const safeheron::bignum::BN &n, const safeheron::bign
 }
 
 bool RSAPublicKey::InternalVerifySignature(const safeheron::bignum::BN &x, const safeheron::bignum::BN &sig) {
-    // check y^e mod n = x, where y = sig
-    return sig.PowM(e_, n_) == x;
+    // check y^e = x  mod n, where y = sig
+    return sig.PowM(e_, n_) == (x % n_);
 }
 
 bool RSAPublicKey::VerifySignature(const string &doc, const safeheron::bignum::BN &sig){
