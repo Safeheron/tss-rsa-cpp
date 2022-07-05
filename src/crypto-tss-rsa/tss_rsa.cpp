@@ -98,7 +98,7 @@ static bool InternalGenerateKey(size_t key_bits_length, int l, int k,
 /**
  * Generate private key shares, public key, key meta data.
  *
- * @param[in] key_bits_length: 2048, 3072, 4096 is advised.
+ * @param[in] key_bits_length: 1024/2048/3072/4096.  4096 is advised.
  * @param[in] l: total number of private key shares.
  * @param[in] k: threshold, k < l and k >= (l/2+1)
  * @param[out] private_key_share_arr[out]: shares of private key.
@@ -110,6 +110,11 @@ bool GenerateKey(size_t key_bits_length, int l, int k,
                  std::vector<RSAPrivateKeyShare> &private_key_share_arr,
                  RSAPublicKey &public_key,
                  RSAKeyMeta &key_meta){
+    // check key_bits_length
+    if( (key_bits_length != 1024) && (key_bits_length != 2048) && (key_bits_length != 3072) && (key_bits_length != 4096)){
+        return false;
+    }
+
     // check k, l
     if(l <= 1 || k <= 0 || k < (l/2+1) || k > l){
         return false;
@@ -118,14 +123,13 @@ bool GenerateKey(size_t key_bits_length, int l, int k,
     // default value
     int e = f4;
 
-    size_t key_bytes = key_bits_length / 8;
     // p = 2p' + 1
-    BN p = safeheron::rand::RandomSafePrime(key_bytes / 2);
+    BN p = safeheron::rand::RandomSafePrime(key_bits_length / 2);
 
     // q = 2q' + 1, make sure: p != q
     BN q;
     do {
-        q = safeheron::rand::RandomSafePrime(key_bytes / 2);
+        q = safeheron::rand::RandomSafePrime(key_bits_length / 2 - 1);
     } while (p == q);
 
     // n = p * q
@@ -146,7 +150,7 @@ bool GenerateKey(size_t key_bits_length, int l, int k,
 /**
  * Generate private key shares, public key, key meta data with specified parameters.
  *
- * @param[in] key_bits_length: 2048, 3072, 4096 are suggested.
+ * @param[in] key_bits_length: 1024/2048/3072/4096.  4096 is advised.
  * @param[in] l: total number of private key shares.
  * @param[in] k: threshold, k < l and k >= (l/2+1)
  * @param[in] param: specified parameters.
@@ -160,8 +164,6 @@ bool GenerateKeyEx(size_t key_bits_length, int l, int k,
                    std::vector<RSAPrivateKeyShare> &private_key_share_arr,
                    RSAPublicKey &public_key,
                    RSAKeyMeta &key_meta){
-    size_t key_bytes = key_bits_length / 8;
-
     // check k, l
     if(l <= 1 || k <= 0 || k < (l/2+1) || k > l){
         return false;
@@ -180,7 +182,7 @@ bool GenerateKeyEx(size_t key_bits_length, int l, int k,
 
     // check p: p = 2p' + 1
     if(param.p() == 0){
-        BN p = safeheron::rand::RandomSafePrime(key_bytes / 2);
+        BN p = safeheron::rand::RandomSafePrime(key_bits_length/ 2);
         param.set_p(p);
     }else{
         BN pp = (param.p() - 1)/2;
@@ -194,7 +196,7 @@ bool GenerateKeyEx(size_t key_bits_length, int l, int k,
     if(param.q() == 0){
         BN q;
         do {
-            q = safeheron::rand::RandomSafePrime(key_bytes / 2);
+            q = safeheron::rand::RandomSafePrime(key_bits_length / 2 - 1);
         }while (q == param.p());
         param.set_q(q);
     }else{

@@ -41,7 +41,7 @@ TEST(TSS_RSA, PSS) {
     // Prepare EMSA_PSS
     std::string doc_pss = safeheron::tss_rsa::EncodeEMSA_PSS(doc, key_bits_length,
                                                          safeheron::tss_rsa::SaltLength::AutoLength);
-    std::cout << "doc_pss: " << safeheron::encode::hex::EncodeToHex(doc) << std::endl;
+    std::cout << "doc_pss: " << safeheron::encode::hex::EncodeToHex(doc_pss) << std::endl;
 
     // Sign
     for(int i = 0; i < l; i++) {

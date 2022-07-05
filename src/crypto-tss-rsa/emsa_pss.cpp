@@ -200,7 +200,7 @@ namespace safeheron {
 
             // 9.  Set the leftmost 8emLen - emBits bits of the leftmost octet in DB to zero.
             c = 255;
-            for(int i = 0; i < emLen * 8 -emBits; i++) {
+            for(size_t i = 0; i < emLen * 8 -emBits; i++) {
                 c = c >> 1;
             }
             DB[0] &= c;
