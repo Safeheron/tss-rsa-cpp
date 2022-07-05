@@ -10,15 +10,15 @@ The library comes with serialize/deserialize support to be used in higher level 
 
 - [OpenSSL](https://github.com/openssl/openssl#documentation). See the [OpenSSL Installation Instructions](./doc/OpenSSL-Installation.md)
 - [Protocol Buffers](https://github.com/protocolbuffers/protobuf.git). See the [Protocol Buffers Installation Instructions](./doc/Protocol-Buffers-Installation.md)
-- [crypto-suites-cpp](https://github.com/safeheron/crypto-suites-cpp.git). See the [crypto-suites-cpp Installation Instructions](https://github.com/safeheron/crypto-suites-cpp/blob/main/README.md#build-and-install)
+- [crypto-suites-cpp](https://github.com/safeheron/crypto-suites-cpp.git). See the [crypto-suites-cpp Installation Instructions](https://github.com/safeheron/crypto-suites-cpp/blob/main/README.md#build-and-install). **Version v0.8.0 or later required**.
 
 # Build and Install
 
 Linux and Mac are supported now.  After obtaining the Source, have a look at the installation script.
 
 ```shell
-git clone https://github.com/safeheron/crypto-tss-rsa-cpp.git
-cd crypto-tss-rsa-cpp
+git clone https://github.com/safeheron/tss-rsa-cpp.git
+cd tss-rsa-cpp
 mkdir build && cd build
 # Run "cmake .. -DOPENSSL_ROOT_DIR=Your-Root-Directory-of-OPENSSL" instead of the command below on Mac OS.
 cmake .. -DENABLE_TESTS=ON
