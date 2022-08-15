@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package safeheron.proto;
+
+message RSAPublicKey{
+    string n = 1;
+    string e = 2;
+}
+
+message RSAPrivateKeyShare{
+    int32 i = 1;
+    string si = 2;
+}
+
+message RSAKeyMeta{
+    int32 k = 1;
+    int32 l = 2;
+    string vkv = 3;
+    string vku = 4;
+    repeated string vki_arr = 5;
+}
+
+message RSASigShare{
+    int32 index = 1;
+    string sig_share = 2;
+    string z = 3;
+    string c = 4;
+}
+
+message RSASigShareProof{
+    string z = 1;
+    string c = 2;
+}
