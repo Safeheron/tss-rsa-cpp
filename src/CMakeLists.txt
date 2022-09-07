@@ -12,7 +12,7 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         crypto-tss-rsa/RSASigShareProof.cpp
         crypto-tss-rsa/tss_rsa.cpp
         crypto-tss-rsa/emsa_pss.cpp
-        crypto-tss-rsa/tss_rsa.pb.cc
+        crypto-tss-rsa/proto_gen/tss_rsa.pb.switch.cc
         )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE

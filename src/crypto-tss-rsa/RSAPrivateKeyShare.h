@@ -7,7 +7,7 @@
 #include "RSAPrivateKeyShare.h"
 #include "RSAPublicKey.h"
 #include "RSASigShare.h"
-#include "tss_rsa.pb.h"
+#include "proto_gen/tss_rsa.pb.switch.h"
 
 namespace safeheron {
 namespace tss_rsa{

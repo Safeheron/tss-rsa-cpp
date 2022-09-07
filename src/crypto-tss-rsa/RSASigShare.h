@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "crypto-bn/bn.h"
-#include "tss_rsa.pb.h"
+#include "proto_gen/tss_rsa.pb.switch.h"
 
 namespace safeheron {
 namespace tss_rsa{

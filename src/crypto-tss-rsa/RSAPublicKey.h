@@ -2,7 +2,7 @@
 #define SAFEHERON_RSA_PUBLIC_KEY_H
 
 #include "crypto-bn/bn.h"
-#include "tss_rsa.pb.h"
+#include "proto_gen/tss_rsa.pb.switch.h"
 
 
 namespace safeheron {
