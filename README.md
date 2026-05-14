@@ -79,6 +79,7 @@ find_package(CryptoTSSRSA REQUIRED)
 add_executable(${PROJECT_NAME} XXXX.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC
         ${SafeheronCryptoSuites_INCLUDE_DIRS}
+        ${SafeheronCryptoSuites_INCLUDE_DIRS}/crypto-suites
         ${CryptoTSSRSA_INCLUDE_DIRS}
         ${PROTOBUF_INCLUDE_DIRS}
         )
