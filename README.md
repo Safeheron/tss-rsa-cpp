@@ -13,7 +13,7 @@ The library comes with serialize/deserialize support to be used in higher level 
 **Prerequisites:**
 - [OpenSSL](https://github.com/openssl/openssl#documentation). See the [OpenSSL Installation Instructions](./doc/OpenSSL-Installation.md)
 - [Protocol Buffers](https://github.com/protocolbuffers/protobuf.git). See the [Protocol Buffers Installation Instructions](./doc/Protocol-Buffers-Installation.md)
-- [crypto-suites-cpp](https://github.com/safeheron/crypto-suites-cpp.git). See the [crypto-suites-cpp Installation Instructions](https://github.com/safeheron/crypto-suites-cpp/blob/main/README.md#build-and-install). **Version v0.8.0 or later required**
+- [crypto-suites-cpp](https://github.com/safeheron/crypto-suites-cpp.git). See the [crypto-suites-cpp Installation Instructions](https://github.com/safeheron/crypto-suites-cpp/blob/main/README.md#build-and-install). **Version v1.1.0 or later required**
 
 Linux and Mac are supported now. After obtaining the source, have a look at the installation script.
 
