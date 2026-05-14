@@ -14,6 +14,8 @@ The library comes with serialize/deserialize support to be used in higher level 
 
 # Build and Install
 
+## Default Platform (Linux / Mac)
+
 Linux and Mac are supported now.  After obtaining the Source, have a look at the installation script.
 
 ```shell
@@ -31,6 +33,24 @@ sudo make install
 
 More platforms such as Windows would be supported soon.
 
+## SGX Platform
+
+Prerequisites:
+- [ssgx](https://github.com/Safeheron/ssgx)
+
+Build and install to `/opt/safeheron/ssgx`:
+
+```shell
+git clone https://github.com/safeheron/tss-rsa-cpp.git
+cd tss-rsa-cpp
+mkdir build-sgx && cd build-sgx
+cmake .. -DPLATFORM=SGX -DCMAKE_INSTALL_PREFIX=/opt/safeheron/ssgx
+make
+sudo make install
+```
+
+This produces a static library `libCryptoTSSRSASgx.a` suitable for linking into an SGX enclave.
+
 
 # To start using crypto-tss-rsa-cpp
 
@@ -41,6 +61,8 @@ CMake is your best option. It supports building on Linux, MacOS and Windows (soo
 To build crypto-tss-rsa-cpp from source, follow the BUILDING guide.
 
 The canonical way to discover dependencies in CMake is the find_package command.
+
+### Default Platform
 
 ```shell
 project(XXXX)
@@ -68,6 +90,27 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
         OpenSSL::Crypto
         ${PROTOBUF_LINK_LIBRARIES}
         pthread )
+```
+
+### SGX Platform
+
+```cmake
+list(APPEND CMAKE_PREFIX_PATH "/opt/safeheron/ssgx")
+find_package(ssgx REQUIRED)
+find_package(SafeheronCryptoSuitesSgx REQUIRED)
+find_package(CryptoTSSRSASgx REQUIRED)
+
+ssgx_add_trusted_library(${PROJECT_NAME}
+    SRCS XXXX.cpp
+    EDL XXXX.edl
+    EDL_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}
+    TRUSTED_LIBS CryptoTSSRSASgx SafeheronCryptoSuitesSgx
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+        ${CryptoTSSRSASgx_INCLUDE_DIRS}
+        ${SafeheronCryptoSuitesSgx_INCLUDE_DIRS}/crypto-suites
+        )
 ```
 
 # Usage
