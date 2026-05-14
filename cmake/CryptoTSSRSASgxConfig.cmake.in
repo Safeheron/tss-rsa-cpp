@@ -1,0 +1,19 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/CryptoTSSRSASgxTargets.cmake")
+
+message(STATUS "CryptoTSSRSASgx: Loading package.")
+set_and_check(CryptoTSSRSASgx_INCLUDE_DIR  "${PACKAGE_PREFIX_DIR}/include")
+set_and_check(CryptoTSSRSASgx_INCLUDE_DIRS "${PACKAGE_PREFIX_DIR}/include")
+set_and_check(CryptoTSSRSASgx_LIBRARY_DIR  "${PACKAGE_PREFIX_DIR}/lib")
+get_target_property(CryptoTSSRSASgx_LIBRARY CryptoTSSRSASgx IMPORTED_LOCATION)
+if(NOT CryptoTSSRSASgx_LIBRARY)
+    get_target_property(CryptoTSSRSASgx_LIBRARY CryptoTSSRSASgx IMPORTED_LOCATION_RELEASE)
+endif()
+
+if(NOT CryptoTSSRSASgx_LIBRARY)
+    message(FATAL_ERROR "Could not determine library location for target CryptoTSSRSASgx.")
+else()
+    set_and_check(CryptoTSSRSASgx_LIBRARY "${CryptoTSSRSASgx_LIBRARY}")
+    message(STATUS "Found CryptoTSSRSASgx: ${CryptoTSSRSASgx_LIBRARY}")
+endif()

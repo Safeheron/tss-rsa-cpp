@@ -21,7 +21,7 @@ install(
         TARGETS ${PROJECT_NAME}
         EXPORT ${exported_targets_name}
         ARCHIVE DESTINATION lib
-        PUBLIC_HEADER DESTINATION include/safeheron
+        PUBLIC_HEADER DESTINATION include
 )
 
 install(
@@ -41,6 +41,6 @@ install(
 ## Install head files
 install(
         DIRECTORY src/
-        DESTINATION include/safeheron
+        DESTINATION include
         FILES_MATCHING PATTERN "*.h"
 )
